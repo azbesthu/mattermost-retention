@@ -50,7 +50,7 @@ case $DB_DRIVE in
         ###
         $DB_DOCKER_CMD psql -h "$DB_HOST" -U"$DB_USER" "$DB_NAME" -t --pset=pager=off --no-align -c "select path from fileinfo where path <> '' and createat < $delete_before;" > /tmp/mattermost-paths.list
         $DB_DOCKER_CMD psql -h "$DB_HOST" -U"$DB_USER" "$DB_NAME" -t --pset=pager=off --no-align -c "select thumbnailpath from fileinfo where thumbnailpath <> '' and createat < $delete_before;" >> /tmp/mattermost-paths.list
-        $DB_DOCKER_CMD psql -h "$DB_HOST" -U"$DB_USER" "$DB_NAME" -t --pset=pager=off --no-align -c "select previewpath from fileinfo where previewpath <> '' createat < $delete_before;" >> /tmp/mattermost-paths.list
+        $DB_DOCKER_CMD psql -h "$DB_HOST" -U"$DB_USER" "$DB_NAME" -t --pset=pager=off --no-align -c "select previewpath from fileinfo where previewpath <> '' and createat < $delete_before;" >> /tmp/mattermost-paths.list
 
         ###
         # cleanup db
@@ -97,7 +97,7 @@ done < /tmp/mattermost-paths.list
 # cleanup after script execution
 ###
 NOW=$(date +"%Y-%m-%d-%H-%M")
-mv /tmp/mattermost-paths.list /tmp/mattermost-paths.list--$NOW
+mv /tmp/mattermost-paths.list /tmp/mattermost-paths.list-$NOW
 
 ###
 # cleanup empty data dirs
